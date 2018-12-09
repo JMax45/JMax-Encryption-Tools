@@ -60,14 +60,14 @@ def Crypt():
                                                    (dict(AB_Dict1)))
         text2.delete('1.0',END)
         text2.insert(INSERT, Crypted_Text_AB)
-        window.label_text.destroy()
+        window.label_text.place_forget()
 
     if crypt_type == (2):
         Encrypted_Text_Morse = mtext1.upper().translate(str.maketrans
                                                      (dict(letter_to_morse1)))
         text2.delete('1.0', END)
         text2.insert(INSERT, Encrypted_Text_Morse)
-        window.label_text.destroy()
+        window.label_text.place_forget()
         
 
     
@@ -83,16 +83,22 @@ def Decrypt():
                                                      (dict(AB_Dict2)))
         text2.delete('1.0', END)
         text2.insert(INSERT, Decrypted_Text_AB)
-        window.label_text.destroy()
+        window.label_text.place_forget()
 
     if crypt_type == (2):
         morse_to_letter = dict(letter_to_morse2)
         morse_to_decrypt = mtext2.strip()
-        decrypted_morse = ("".join([morse_to_letter[c + " "] for c in
-                                    morse_to_decrypt.split(" ")]))
-        text2.delete('1.0', END)
-        text2.insert(INSERT, decrypted_morse)
-        window.label_text.destroy()
+        decrypted_morse = ("".join([morse_to_letter.get(c + " ", "#error#")
+                                    for c in morse_to_decrypt.split(" ")]))
+
+        if decrypted_morse == ("#error#"):
+            window.label_text.config(text="""Nel testo inserito è presente un simbolo
+non riconosciuto dalla libreria""", fg='red')
+            window.label_text.place(x=490,y=120)
+        else:
+            text2.delete('1.0', END)
+            text2.insert(INSERT, decrypted_morse)
+            window.label_text.place_forget()
 
         
 window = Tk()
