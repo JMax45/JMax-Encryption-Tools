@@ -7,6 +7,11 @@ import os
 import pyperclip
 from PyFiles.PopUp_MorseCode import *
 from PyFiles.PopUp_CaesarCipher import *
+from PyFiles.Text.speak import *
+import shutil
+import datetime
+import time
+import glob
 
 
 #Per un corretto funzionamento serve il modulo pyperclip
@@ -42,6 +47,30 @@ letter_to_morse2 = [(".- ","A"),("-... ","B"),("-.-. ","C"),
                     ("...- ","V"),(".-- ","W"),("-..- ","X"),
                     ("-.-- ","Y"),("--.. ","Z"),("/ "," ")]
 
+files = glob.glob('PyFiles/mtts/*.mp3')
+for f in files:
+    os.remove(f)
+
+mixer.init()
+
+def startaudio():
+    mp3_nameold='111'
+    mp3_name="1.mp3"
+    
+    mtts = text2.get("1.0",END)
+    tts = gTTS(mtts, lang='it')
+
+    now_time = datetime.datetime.now()
+    mp3_name = now_time.strftime("PyFiles/mtts/%d%m%Y%I%M%S")+".mp3"
+    tts.save(mp3_name)
+
+    mixer.music.load(mp3_name)
+    mixer.music.play()
+
+ 
+
+
+    
 
 def Copy_to_clipboard():
     mtext3 = text2.get("1.0",END)
@@ -107,7 +136,7 @@ text1 = StringVar()
 Type = IntVar()
 Type.set(0)
 
-Caesar_Cipher = Radiobutton(window,text="Caesar cipher", variable = Type,
+Caesar_Cipher = Radiobutton(window,text="Caesar Cipher", variable = Type,
                 value = 1)
 Caesar_Cipher.place(y=100,x=200)
 Morse_Cipher = Radiobutton(window,text="Morse Code", variable = Type,
@@ -133,6 +162,8 @@ Button2 = Button(text="Cripta", command=Crypt)
 Button2.place(y=200,x=385)
 Button3 = Button(text="Decripta", command=Decrypt)
 Button3.place(y=250,x=379)
+Button4 = Button(text="Audio", command=startaudio)
+Button4.place(y=423,x=478)
 
 m = Menu(window)                                       
 fn2 = Menu(m, tearoff=0)
