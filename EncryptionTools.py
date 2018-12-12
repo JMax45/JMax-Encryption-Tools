@@ -8,8 +8,10 @@ import pyperclip
 from PyFiles.PopUp_MorseCode import *
 from PyFiles.PopUp_CaesarCipher import *
 from PyFiles.Text.speak import *
+from PyFiles.settings.mtts_language.language import *
 import shutil
 import datetime
+from PIL import ImageTk, Image
 import time
 import glob
 
@@ -56,9 +58,12 @@ mixer.init()
 def startaudio():
     mp3_nameold='111'
     mp3_name="1.mp3"
+
+    f = open("PyFiles/settings/mtts_language/language.txt","r")
+    l_language = f.readline()
     
     mtts = text2.get("1.0",END)
-    tts = gTTS(mtts, lang='it')
+    tts = gTTS(mtts, lang=l_language)
 
     now_time = datetime.datetime.now()
     mp3_name = now_time.strftime("PyFiles/mtts/%d%m%Y%I%M%S")+".mp3"
@@ -162,14 +167,26 @@ Button2 = Button(text="Cripta", command=Crypt)
 Button2.place(y=200,x=385)
 Button3 = Button(text="Decripta", command=Decrypt)
 Button3.place(y=250,x=379)
-Button4 = Button(text="Audio", command=startaudio)
+Button4 = Button(window, text="Click", command=startaudio)
+img = ImageTk.PhotoImage(Image.open("Audio20.png"))
+Button4.config(image=img)
 Button4.place(y=423,x=478)
+
+
 
 m = Menu(window)                                       
 fn2 = Menu(m, tearoff=0)
+fn3 = Menu(m, tearoff=0)
+fn4 = Menu(m, tearoff=0)
+fn4.add_radiobutton(label="English", command=l_en_US)
+fn4.add_radiobutton(label="Italian (Italy)", command=l_it_IT)
                         
 m.add_cascade(label='Types', menu=fn2)
 fn2.add_command(label='Caesar Cipher', command=PopUp_CaesarCipher)
 fn2.add_command(label='Morse Code', command=PopUp_MorseCode)
+m.add_cascade(label='Impostazioni', menu=fn3)
+fn3.add_cascade(label='Audio', menu=fn4)
+
+
                                           
 window.config(menu=m)
