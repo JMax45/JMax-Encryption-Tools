@@ -3,13 +3,19 @@ Program that collects the various methods of encryption and decryption
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install pyperclip, shutil, gtts and pygame.
+The program uses PyQt as GUI so its installation is required.
 
+Linux:
 ```bash
-pip install pyperclip
-pip install gtts
-pip install pygame
-pip install shutil
+sudo apt-get install python-qt4 qt4-designer
+```
+macOS:
+```bash
+brew install pyqt5
+```
+Windows:
+```bash
+Download [here](https://www.youtube.com/watch?v=ySLc8gZ3oEc&list=LL7qTuN4j9Cgjvcu38CsrBqA&index=7]
 ```
 
 ## Contributing
