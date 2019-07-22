@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtWidgets
-import design
+from design import design
 
 AB_Dict1 = [("A","C"),("B","D"),("C","E"),("D","F"),("E","G"),("F","H"),("G","I"),("H","J"),
              ("I","K"),("J","L"),("K","M"),("L","N"),("M","O"),("N","P"),("O","Q"),
