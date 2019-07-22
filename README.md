@@ -14,8 +14,9 @@ macOS:
 brew install pyqt5
 ```
 Windows:
-Download [here](https://www.riverbankcomputing.com/software/pyqt/download5]
-
+```bash
+Download [here](https://www.riverbankcomputing.com/software/pyqt/download5)
+```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
