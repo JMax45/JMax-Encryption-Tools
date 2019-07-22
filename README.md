@@ -14,6 +14,7 @@ macOS:
 brew install pyqt5
 ```
 Windows:
+
 Download [here](https://www.riverbankcomputing.com/software/pyqt/download5)
 
 ## Contributing
