@@ -1,46 +1,8 @@
 import sys
 from PyQt5 import QtWidgets
 from design import design
-
-AB_Dict1 = [("A","C"),("B","D"),("C","E"),("D","F"),("E","G"),("F","H"),("G","I"),("H","J"),
-             ("I","K"),("J","L"),("K","M"),("L","N"),("M","O"),("N","P"),("O","Q"),
-             ("P","R"),("Q","S"),("R","T"),("S","U"),("T","V"),("U","W"),
-             ("V","X"),("W","Y"),("X","Z"),("Y","A"),("Z","B"),
-
-             ("a","c"),("b","d"),("c","e"),("d","f"),("e","g"),("f","h"),("g","i"),("h","j"),
-             ("i","k"),("j","l"),("k","m"),("l","n"),("m","o"),("n","p"),("o","q"),
-             ("p","r"),("q","s"),("r","t"),("s","u"),("t","v"),("u","w"),
-             ("v","x"),("w","y"),("x","z"),("y","a"),("z","b")]
-
-AB_Dict2 = [("C","A"),("D","B"),("E","C"),("F","D"),("H","F"),("I","G"),("J","H"),
-             ("K","I"),("L","J"),("M","K"),("N","L"),("O","M"),("P","N"),("Q","O"),
-             ("R","P"),("S","Q"),("T","R"),("U","S"),("V","T"),("W","U"),
-             ("X","V"),("Y","W"),("Z","X"),("A","Y"),("B","Z"),("G","E"),
-
-             ("c","a"),("d","b"),("e","c"),("f","d"),("h","f"),("i","g"),("j","h"),
-             ("k","i"),("l","j"),("m","k"),("n","l"),("o","m"),("p","n"),("q","o"),
-             ("r","p"),("s","q"),("t","r"),("u","s"),("v","t"),("w","u"),
-             ("x","v"),("y","w"),("z","x"),("a","y"),("b","z"),("g","e")]
-
-letter_to_morse1 = [("A",".- "),("B","-... "),("C","-.-. "),
-                   ("D","-.. "),("E",". "),("F","..-. "),
-                   ("G","--. "),("H",".... "),("I",".. "),
-                   ("J",".--- "),("K","-.- "),("L",".-.. "),
-                   ("M","-- "),("N","-. "),("O","--- "),
-                   ("P",".--. "),("Q","--.- "),("R",".-. "),
-                   ("S","... "),("T","- "),("U","..- "),
-                   ("V","...- "),("W",".-- "),("X","-..- "),
-                   ("Y","-.-- "),("Z","--.. "),(" ","/ ")]
-
-letter_to_morse2 = [(".- ","A"),("-... ","B"),("-.-. ","C"),
-                    ("-.. ","D"),(". ","E"),("..-. ","F"),
-                    ("--. ","G"),(".... ","H"),(".. ","I"),
-                    (".--- ","J"),("-.- ","K"),(".-.. ","L"),
-                    ("-- ","M"),("-. ","N"),("--- ","O"),
-                    (".--. ","P"),("--.- ","Q"),(".-. ","R"),
-                    ("... ","S"),("- ","T"),("..- ","U"),
-                    ("...- ","V"),(".-- ","W"),("-..- ","X"),
-                    ("-.-- ","Y"),("--.. ","Z"),("/ "," ")]
+from metods.caesar import *
+from metods.morse import *
 
 vigenere_translate = [("T"," ")]
 class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
@@ -50,11 +12,11 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         vigenere_radio = self.radioButton_3.isChecked()
         if caesar_radio == True:
             mytext = self.textEdit.toPlainText()
-            crypted_text = mytext.translate(str.maketrans(dict(AB_Dict1)))
+            crypted_text = mytext.translate(str.maketrans(dict(caesar_dict1)))
             self.textEdit_2.setText(crypted_text)
         if morse_radio == True:
             mytext = self.textEdit.toPlainText()
-            decrypted_text = mytext.upper().translate(str.maketrans(dict(letter_to_morse1)))
+            decrypted_text = mytext.upper().translate(str.maketrans(dict(morse_dict1)))
             self.textEdit_2.setText(decrypted_text)
         if vigenere_radio == True:
             mytext = self.textEdit.toPlainText()
@@ -74,11 +36,11 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         vigenere_radio = self.radioButton_3.isChecked()
         if caesar_radio == True:
             mytext = self.textEdit.toPlainText()
-            decrypted_text = mytext.translate(str.maketrans(dict(AB_Dict2)))
+            decrypted_text = mytext.translate(str.maketrans(dict(caesar_dict2)))
             self.textEdit_2.setText(decrypted_text)
         if morse_radio == True:
             mytext = self.textEdit.toPlainText()
-            morse_to_letter3 = dict(letter_to_morse2)
+            morse_to_letter3 = dict(morse_dict2)
             morse_to_decrypt = mytext.strip()
             decrypted_text = ("".join([morse_to_letter3.get(c + " ", "#error#")
                                     for c in morse_to_decrypt.split(" ")]))
