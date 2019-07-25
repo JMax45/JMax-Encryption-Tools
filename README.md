@@ -15,7 +15,7 @@ brew install pyqt5
 ```
 Windows:
 ```bash
-Download [here](https://www.riverbankcomputing.com/software/pyqt/download5).
+Download here: https://www.riverbankcomputing.com/software/pyqt/download5.
 ```
 
 ## Cryptographic Metods
