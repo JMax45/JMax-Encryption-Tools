@@ -3,8 +3,10 @@ from PyQt5 import QtWidgets
 from design import design
 from metods.caesar import *
 from metods.morse import *
+import string
+import random
 
-vigenere_translate = [("T"," ")]
+vigenere_translate = [("T","  ")]
 class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
     def crypt(self):
         caesar_radio = self.radioButton_2.isChecked()
@@ -21,7 +23,19 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         if vigenere_radio == True:
             mytext = self.textEdit.toPlainText()
             m=str(mytext.upper())
-            k="ZEVER"
+            def randomStringDigits(stringLength=6):
+                var1SET = ("")
+                var2SET = ("")
+                var3SET = ("")
+                var1SET = string.ascii_letters
+                var2SET = string.digits
+                var3SET = string.punctuation
+
+                lettersAndDigits = var1SET + var2SET + var3SET
+                return ''.join(random.choice(lettersAndDigits) for i in range(6))
+            
+            generated_password = randomStringDigits(8)
+            k=str(generated_password)
             k*=len(m)//len(k)+1 
             c=""
             for i,j in enumerate(m):
