@@ -5,17 +5,17 @@ Program that collects the various methods of encryption and decryption
 
 The program uses PyQt as GUI so its installation is required.
 
-Linux:
+**Linux:**
 ```bash
 sudo apt-get install python-qt4 qt4-designer
 ```
-macOS:
+**macOS:**
 ```bash
 brew install pyqt5
 ```
-Windows:
+**Windows:**
 ```bash
-Download here: https://www.riverbankcomputing.com/software/pyqt/download5.
+Download here: https://www.riverbankcomputing.com/software/pyqt/download5
 ```
 
 ## Cryptographic Metods
