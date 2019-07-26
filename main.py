@@ -1,75 +1,95 @@
 import sys
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtTest
 from design import design
-from metods.caesar import *
 from metods.morse import *
-import string
-import random
+from metods.caesar import *
+from metods.vigenere import *
 
-vigenere_translate = [("T","  ")]
+to_encrypt = ("")
+to_decrypt = ("")
+encryption_key = ("")
+
 class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
     def crypt(self):
         caesar_radio = self.radioButton_2.isChecked()
         morse_radio = self.radioButton.isChecked()
         vigenere_radio = self.radioButton_3.isChecked()
+        if caesar_radio + morse_radio + vigenere_radio == 0:
+            self.textEdit_2.setText("Choose an encryption metod")
+            QtTest.QTest.qWait(1000)
+            self.textEdit_2.setText("")
+        empty_check = self.textEdit.toPlainText()
+        def empty_check_true():
+            self.textEdit_2.setText("The text field is empty")
+            QtTest.QTest.qWait(1000)
+            self.textEdit_2.setText("")
         if caesar_radio == True:
-            mytext = self.textEdit.toPlainText()
-            crypted_text = mytext.translate(str.maketrans(dict(caesar_dict1)))
-            self.textEdit_2.setText(crypted_text)
+            if empty_check == "":
+                empty_check_true()
+            else:
+                global to_encrypt
+                to_encrypt = self.textEdit.toPlainText()
+                caesar_crypt()
+                from metods.caesar import encrypted_text
+                self.textEdit_2.setText(encrypted_text)
         if morse_radio == True:
-            mytext = self.textEdit.toPlainText()
-            decrypted_text = mytext.upper().translate(str.maketrans(dict(morse_dict1)))
-            self.textEdit_2.setText(decrypted_text)
+            if empty_check == "":
+                empty_check_true()
+            else:
+                to_encrypt = self.textEdit.toPlainText()
+                morse_crypt()
+                from metods.morse import encrypted_text
+                self.textEdit_2.setText(encrypted_text)
         if vigenere_radio == True:
-            mytext = self.textEdit.toPlainText()
-            m=str(mytext.upper())
-            def randomStringDigits(stringLength=6):
-                var1SET = ("")
-                var2SET = ("")
-                var3SET = ("")
-                var1SET = string.ascii_letters
-                var2SET = string.digits
-                var3SET = string.punctuation
-
-                lettersAndDigits = var1SET + var2SET + var3SET
-                return ''.join(random.choice(lettersAndDigits) for i in range(6))
-            
-            generated_password = randomStringDigits(8)
-            k=str(generated_password)
-            k*=len(m)//len(k)+1 
-            c=""
-            for i,j in enumerate(m):
-                    gg=(ord(j)+ord(k[i])) 
-                    c+=chr(gg%26+65) 
-            self.textEdit_2.setText(str(c))
-            self.lineEdit.setText(k)
+            if empty_check == "":
+                empty_check_true()
+            else:
+                to_encrypt = self.textEdit.toPlainText()
+                vigenere_crypt()
+                from metods.vigenere import encrypted_text,encryption_key
+                self.textEdit_2.setText(encrypted_text)
+                self.lineEdit.setText(encryption_key)
         self.textEdit.setText("")     
     def decrypt(self):
         caesar_radio = self.radioButton_2.isChecked()
         morse_radio = self.radioButton.isChecked()
         vigenere_radio = self.radioButton_3.isChecked()
+        if caesar_radio + morse_radio + vigenere_radio == 0:
+            self.textEdit_2.setText("Choose an encryption metod")
+            QtTest.QTest.qWait(1000)
+            self.textEdit_2.setText("")
+        empty_check = self.textEdit.toPlainText()
+        def empty_check_true():
+            self.textEdit_2.setText("The text field is empty")
+            QtTest.QTest.qWait(1000)
+            self.textEdit_2.setText("")
         if caesar_radio == True:
-            mytext = self.textEdit.toPlainText()
-            decrypted_text = mytext.translate(str.maketrans(dict(caesar_dict2)))
-            self.textEdit_2.setText(decrypted_text)
+            if empty_check == "":
+                empty_check_true()
+            else:
+                global to_decrypt
+                to_decrypt = self.textEdit.toPlainText()
+                caesar_decrypt()
+                from metods.caesar import decrypted_text
+                self.textEdit_2.setText(decrypted_text)
         if morse_radio == True:
-            mytext = self.textEdit.toPlainText()
-            morse_to_letter3 = dict(morse_dict2)
-            morse_to_decrypt = mytext.strip()
-            decrypted_text = ("".join([morse_to_letter3.get(c + " ", "#error#")
-                                    for c in morse_to_decrypt.split(" ")]))
-            self.textEdit_2.setText(decrypted_text)
+            if empty_check == "":
+                empty_check_true()
+            else:
+                to_decrypt = self.textEdit.toPlainText()
+                morse_decrypt()
+                from metods.morse import decrypted_text
+                self.textEdit_2.setText(decrypted_text)
         if vigenere_radio == True:
-            mytext = self.textEdit.toPlainText()
-            mykey = self.lineEdit.text()
-            c=str(mytext)
-            k=str(mykey)
-            d="" 
-            for i,j in enumerate(c): 
-                    gg=(ord(j)-ord(k[i])) 
-                    d+=chr(gg%26+65)
-            decrypted_text = d.upper().translate(str.maketrans(dict(vigenere_translate)))        
-            self.textEdit_2.setText(str(d))
+            if empty_check == "":
+                empty_check_true()
+            else:
+                to_decrypt = self.textEdit.toPlainText()
+                global encryption_key
+                encryption_key = self.lineEdit.text()
+                vigenere_decrypt()
+                from metods.vigenere import decrypted_text
+                self.textEdit_2.setText(str(decrypted_text))
         self.textEdit.setText("")
         self.lineEdit.setText("")
     def __init__(self):
