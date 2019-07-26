@@ -27,3 +27,17 @@ caesar_dict2 = [("C","A"),("D","B"),("E","C"),("F","D"),("H","F"),("I","G"),
 
                 ("2","1"),("3","2"),("4","3"),("5","4"),("6","5"),("7","6"),
                 ("8","7"),("9","8")]
+
+encrypted_text = ("null")
+decrypted_text = ("null")
+def caesar_crypt():
+    from __main__ import to_encrypt
+    mytext = to_encrypt
+    crypted_text = mytext.translate(str.maketrans(dict(caesar_dict1)))
+    global encrypted_text
+    encrypted_text = crypted_text
+def caesar_decrypt():
+    from __main__ import to_decrypt
+    crypted_text = to_decrypt.translate(str.maketrans(dict(caesar_dict2)))
+    global decrypted_text
+    decrypted_text = crypted_text
