@@ -1,5 +1,6 @@
 import sys
 from PyQt5 import QtWidgets, QtTest
+from PyQt5.Qt import QApplication, QClipboard
 from design import design
 from metods.morse import *
 from metods.caesar import *
@@ -92,6 +93,16 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
                 self.textEdit_2.setText(str(decrypted_text))
         self.textEdit.setText("")
         self.lineEdit.setText("")
+    def clear_encryption_key(self):
+        self.lineEdit.setText("")
+    def copy_encryption_key(self):
+        copy_key = self.lineEdit.text()
+        QApplication.clipboard().setText(copy_key)
+        self.pushButton_3.setStyleSheet("background-color:#E75917;")
+        self.pushButton_3.setText("COPIED")
+        QtTest.QTest.qWait(1000)
+        self.pushButton_3.setStyleSheet("background-color:None;")
+        self.pushButton_3.setText("COPY")
     def __init__(self):
         # Это здесь нужно для доступа к переменным, методам
         # и т.д. в файле design.py
@@ -99,7 +110,7 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.setupUi(self)  # Это нужно для инициализации нашего дизайна
         self.pushButton.clicked.connect(self.crypt)
         self.pushButton_2.clicked.connect(self.decrypt)
-
+        self.pushButton_3.clicked.connect(self.copy_encryption_key)
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
     window = ExampleApp()  # Создаём объект класса ExampleApp
