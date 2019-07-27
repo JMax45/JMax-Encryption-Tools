@@ -2,9 +2,9 @@ import sys
 from PyQt5 import QtWidgets, QtTest
 from PyQt5.Qt import QApplication, QClipboard
 from design import design
-from metods.morse import *
-from metods.caesar import *
-from metods.vigenere import *
+from methods.morse import *
+from methods.caesar import *
+from methods.vigenere import *
 
 to_encrypt = ("")
 to_decrypt = ("")
@@ -31,7 +31,7 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
                 global to_encrypt
                 to_encrypt = self.textEdit.toPlainText()
                 caesar_crypt()
-                from metods.caesar import encrypted_text
+                from methods.caesar import encrypted_text
                 self.textEdit_2.setText(encrypted_text)
         if morse_radio == True:
             if empty_check == "":
@@ -39,7 +39,7 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             else:
                 to_encrypt = self.textEdit.toPlainText()
                 morse_crypt()
-                from metods.morse import encrypted_text
+                from methods.morse import encrypted_text
                 self.textEdit_2.setText(encrypted_text)
         if vigenere_radio == True:
             if empty_check == "":
@@ -47,7 +47,7 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             else:
                 to_encrypt = self.textEdit.toPlainText()
                 vigenere_crypt()
-                from metods.vigenere import encrypted_text,encryption_key
+                from methods.vigenere import encrypted_text,encryption_key
                 self.textEdit_2.setText(encrypted_text)
                 self.lineEdit.setText(encryption_key)
         self.textEdit.setText("")     
@@ -71,7 +71,7 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
                 global to_decrypt
                 to_decrypt = self.textEdit.toPlainText()
                 caesar_decrypt()
-                from metods.caesar import decrypted_text
+                from methods.caesar import decrypted_text
                 self.textEdit_2.setText(decrypted_text)
         if morse_radio == True:
             if empty_check == "":
@@ -79,7 +79,7 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             else:
                 to_decrypt = self.textEdit.toPlainText()
                 morse_decrypt()
-                from metods.morse import decrypted_text
+                from methods.morse import decrypted_text
                 self.textEdit_2.setText(decrypted_text)
         if vigenere_radio == True:
             if empty_check == "":
@@ -89,7 +89,7 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
                 global encryption_key
                 encryption_key = self.lineEdit.text()
                 vigenere_decrypt()
-                from metods.vigenere import decrypted_text
+                from methods.vigenere import decrypted_text
                 self.textEdit_2.setText(str(decrypted_text))
         self.textEdit.setText("")
         self.lineEdit.setText("")
