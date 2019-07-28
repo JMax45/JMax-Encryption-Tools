@@ -122,7 +122,6 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.radioButton.toggled.connect(self.hide_vigenere_keys)
         self.radioButton_2.toggled.connect(self.hide_vigenere_keys)
         self.radioButton_3.toggled.connect(self.show_vigenere_keys)
-        self
         #hide and show stuff
         self.lineEdit.hide()
         self.pushButton_3.hide()
