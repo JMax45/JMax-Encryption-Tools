@@ -103,6 +103,14 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         QtTest.QTest.qWait(1000)
         self.pushButton_3.setStyleSheet("background-color:None;")
         self.pushButton_3.setText("COPY")
+    def show_vigenere_keys(self):
+        self.lineEdit.show()
+        self.pushButton_3.show()
+        self.label.show()
+    def hide_vigenere_keys(self):
+        self.lineEdit.hide()
+        self.pushButton_3.hide()
+        self.label.hide()
     def __init__(self):
         # Это здесь нужно для доступа к переменным, методам
         # и т.д. в файле design.py
@@ -111,6 +119,14 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.pushButton.clicked.connect(self.crypt)
         self.pushButton_2.clicked.connect(self.decrypt)
         self.pushButton_3.clicked.connect(self.copy_encryption_key)
+        self.radioButton.toggled.connect(self.hide_vigenere_keys)
+        self.radioButton_2.toggled.connect(self.hide_vigenere_keys)
+        self.radioButton_3.toggled.connect(self.show_vigenere_keys)
+        self
+        #hide and show stuff
+        self.lineEdit.hide()
+        self.pushButton_3.hide()
+        self.label.hide()
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
     window = ExampleApp()  # Создаём объект класса ExampleApp
