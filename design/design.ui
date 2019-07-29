@@ -38,6 +38,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_4">
+        <property name="text">
+         <string>Substitution</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
@@ -99,7 +106,19 @@
      <height>25</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionAbout_JET"/>
+   </widget>
+   <addaction name="menuAbout"/>
   </widget>
+  <action name="actionAbout_JET">
+   <property name="text">
+    <string>About JET</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

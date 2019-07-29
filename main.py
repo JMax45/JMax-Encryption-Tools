@@ -5,6 +5,7 @@ from design import design
 from methods.morse import *
 from methods.caesar import *
 from methods.vigenere import *
+from methods.substitution import *
 
 to_encrypt = ("")
 to_decrypt = ("")
@@ -15,7 +16,8 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         caesar_radio = self.radioButton_2.isChecked()
         morse_radio = self.radioButton.isChecked()
         vigenere_radio = self.radioButton_3.isChecked()
-        if caesar_radio + morse_radio + vigenere_radio == 0:
+        substitution_radio = self.radioButton_4.isChecked()
+        if caesar_radio + morse_radio + vigenere_radio + substitution_radio == 0:
             self.textEdit_2.setText("Choose an encryption metod")
             QtTest.QTest.qWait(1000)
             self.textEdit_2.setText("")
@@ -50,12 +52,21 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
                 from methods.vigenere import encrypted_text,encryption_key
                 self.textEdit_2.setText(encrypted_text)
                 self.lineEdit.setText(encryption_key)
+        if substitution_radio == True:
+            if empty_check == "":
+                empty_check_true()
+            else:
+                to_encrypt = self.textEdit.toPlainText().upper()
+                substitution_crypt()
+                from methods.substitution import encrypted_text
+                self.textEdit_2.setText(encrypted_text)       
         self.textEdit.setText("")     
     def decrypt(self):
         caesar_radio = self.radioButton_2.isChecked()
         morse_radio = self.radioButton.isChecked()
         vigenere_radio = self.radioButton_3.isChecked()
-        if caesar_radio + morse_radio + vigenere_radio == 0:
+        substitution_radio = self.radioButton_4.isChecked()
+        if caesar_radio + morse_radio + vigenere_radio + substitution_radio == 0:
             self.textEdit_2.setText("Choose an encryption metod")
             QtTest.QTest.qWait(1000)
             self.textEdit_2.setText("")
@@ -91,6 +102,14 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
                 vigenere_decrypt()
                 from methods.vigenere import decrypted_text
                 self.textEdit_2.setText(str(decrypted_text))
+        if substitution_radio == True:
+            if empty_check == "":
+                empty_check_true()
+            else:
+                to_decrypt = self.textEdit.toPlainText().upper()
+                substitution_decrypt()
+                from methods.substitution import decrypted_text
+                self.textEdit_2.setText(decrypted_text)        
         self.textEdit.setText("")
         self.lineEdit.setText("")
     def clear_encryption_key(self):
@@ -111,6 +130,16 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.lineEdit.hide()
         self.pushButton_3.hide()
         self.label.hide()
+    def on_click_radioButton(self):
+        caesar_radio = self.radioButton_2.isChecked()
+        morse_radio = self.radioButton.isChecked()
+        vigenere_radio = self.radioButton_3.isChecked()
+        if self.radioButton.isChecked() == True:
+            self.hide_vigenere_keys()
+        if self.radioButton_2.isChecked() == True:
+            self.hide_vigenere_keys()
+        if self.radioButton_3.isChecked() == True:
+            self.show_vigenere_keys()
     def __init__(self):
         # Это здесь нужно для доступа к переменным, методам
         # и т.д. в файле design.py
@@ -119,10 +148,9 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.pushButton.clicked.connect(self.crypt)
         self.pushButton_2.clicked.connect(self.decrypt)
         self.pushButton_3.clicked.connect(self.copy_encryption_key)
-        self.radioButton.toggled.connect(self.hide_vigenere_keys)
-        self.radioButton_2.toggled.connect(self.hide_vigenere_keys)
-        self.radioButton_3.toggled.connect(self.show_vigenere_keys)
-        self
+        self.radioButton.toggled.connect(self.on_click_radioButton)
+        self.radioButton_2.toggled.connect(self.on_click_radioButton)
+        self.radioButton_3.toggled.connect(self.on_click_radioButton)
         #hide and show stuff
         self.lineEdit.hide()
         self.pushButton_3.hide()

@@ -7,8 +7,14 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from design.popup.about_jet import Ui_popup_about_jet
 
 class Ui_MainWindow(object):
+    def open_about_jet(self):
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_popup_about_jet()
+        self.ui.setupUi(self.window)
+        self.window.show()
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(550, 397)
@@ -27,6 +33,9 @@ class Ui_MainWindow(object):
         self.radioButton_3 = QtWidgets.QRadioButton(self.centralwidget)
         self.radioButton_3.setObjectName("radioButton_3")
         self.horizontalLayout_2.addWidget(self.radioButton_3)
+        self.radioButton_4 = QtWidgets.QRadioButton(self.centralwidget)
+        self.radioButton_4.setObjectName("radioButton_4")
+        self.horizontalLayout_2.addWidget(self.radioButton_4)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
         self.textEdit.setObjectName("textEdit")
@@ -60,7 +69,14 @@ class Ui_MainWindow(object):
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 550, 25))
         self.menubar.setObjectName("menubar")
+        self.menuAbout = QtWidgets.QMenu(self.menubar)
+        self.menuAbout.setObjectName("menuAbout")
         MainWindow.setMenuBar(self.menubar)
+        self.actionAbout_JET = QtWidgets.QAction(MainWindow)
+        self.actionAbout_JET.setObjectName("actionAbout_JET")
+        self.actionAbout_JET.triggered.connect(self.open_about_jet)
+        self.menuAbout.addAction(self.actionAbout_JET)
+        self.menubar.addAction(self.menuAbout.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -71,8 +87,11 @@ class Ui_MainWindow(object):
         self.radioButton_2.setText(_translate("MainWindow", "Caesar"))
         self.radioButton.setText(_translate("MainWindow", "Morse"))
         self.radioButton_3.setText(_translate("MainWindow", "Vigenere"))
+        self.radioButton_4.setText(_translate("MainWindow", "Substitution"))
         self.label.setText(_translate("MainWindow", "Key:"))
         self.pushButton_3.setText(_translate("MainWindow", "COPY"))
         self.pushButton.setText(_translate("MainWindow", "CRYPT"))
         self.pushButton_2.setText(_translate("MainWindow", "DECRYPT"))
+        self.menuAbout.setTitle(_translate("MainWindow", "About"))
+        self.actionAbout_JET.setText(_translate("MainWindow", "About JET"))
 
