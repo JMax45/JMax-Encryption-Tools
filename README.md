@@ -22,7 +22,7 @@ Download here: https://www.riverbankcomputing.com/software/pyqt/download5
 
 A set of cryptographic methods are collected and combined in a single program.
 
-Caesar, Binary, Vigenere.
+Caesar, Binary, Vigenere, Substitution.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
