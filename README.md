@@ -18,7 +18,7 @@ brew install pyqt5
 Download here: https://www.riverbankcomputing.com/software/pyqt/download5
 ```
 
-## Cryptographic Metods
+## Cryptographic Methods
 
 A set of cryptographic methods are collected and combined in a single program.
 
