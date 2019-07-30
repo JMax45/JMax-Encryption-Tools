@@ -140,6 +140,8 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             self.hide_vigenere_keys()
         if self.radioButton_3.isChecked() == True:
             self.show_vigenere_keys()
+        if self.radioButton_4.isChecked() == True:
+            self.hide_vigenere_keys()
     def __init__(self):
         # Это здесь нужно для доступа к переменным, методам
         # и т.д. в файле design.py
@@ -151,6 +153,7 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.radioButton.toggled.connect(self.on_click_radioButton)
         self.radioButton_2.toggled.connect(self.on_click_radioButton)
         self.radioButton_3.toggled.connect(self.on_click_radioButton)
+        self.radioButton_4.toggled.connect(self.on_click_radioButton)
         #hide and show stuff
         self.lineEdit.hide()
         self.pushButton_3.hide()
