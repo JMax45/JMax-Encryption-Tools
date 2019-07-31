@@ -120,7 +120,7 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.pushButton_3.setStyleSheet("background-color:#E75917;")
         self.pushButton_3.setText("COPIED")
         QtTest.QTest.qWait(1000)
-        self.pushButton_3.setStyleSheet("background-color:None;")
+        self.pushButton_3.setStyleSheet("background-color:#E75917;")
         self.pushButton_3.setText("COPY")
     def show_vigenere_keys(self):
         self.lineEdit.show()
@@ -158,9 +158,15 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.lineEdit.hide()
         self.pushButton_3.hide()
         self.label.hide()
+        self.pushButton_3.setStyleSheet("background-color:#E75917;")
+        self.lineEdit.setStyleSheet("background-color:#EFF2FB;")
+        self.textEdit.setStyleSheet("background-color:#EFF2FB;")
+        self.textEdit_2.setStyleSheet("background-color:#EFF2FB;")
+        
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
     window = ExampleApp()  # Создаём объект класса ExampleApp
+    window.setStyleSheet("background-color:#CED8F6;")
     window.show()  # Показываем окно
     app.exec_()  # и запускаем приложение
 
