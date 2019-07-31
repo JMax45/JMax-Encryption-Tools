@@ -1,5 +1,5 @@
 # JMax-Encryption-Tools
-Program that collects the various methods of encryption and decryption
+Program that collects the various methods of encryption and decryption.
 
 ## Installation
 
