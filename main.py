@@ -1,7 +1,9 @@
 import sys
+import json
 from PyQt5 import QtWidgets, QtTest
-from PyQt5.Qt import QApplication, QClipboard
+from PyQt5.Qt import QApplication, QClipboard, QFileDialog
 from design import design
+from design.popup.about_jet import Ui_popup_about_jet
 from methods.morse import *
 from methods.caesar import *
 from methods.vigenere import *
@@ -10,6 +12,7 @@ from methods.substitution import *
 to_encrypt = ("")
 to_decrypt = ("")
 encryption_key = ("")
+save_encryption_method = ("")
 
 class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
     def crypt(self):
@@ -136,12 +139,131 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         vigenere_radio = self.radioButton_3.isChecked()
         if self.radioButton.isChecked() == True:
             self.hide_vigenere_keys()
+            global save_encryption_method
+            save_encryption_method = "morse"
         if self.radioButton_2.isChecked() == True:
             self.hide_vigenere_keys()
+            save_encryption_method = "caesar"
         if self.radioButton_3.isChecked() == True:
+            save_encryption_method = "vigenere"
             self.show_vigenere_keys()
         if self.radioButton_4.isChecked() == True:
+            save_encryption_method = "substitution"
             self.hide_vigenere_keys()
+    def open_about_jet(self):
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_popup_about_jet()
+        self.ui.setupUi(self.window)
+        self.window.show()
+    def save_message2(self):
+        file_name = self.lineEdit_2.text()
+        file_name2 = ("saves/"+file_name+".txt")
+        print(file_name2)
+        with open(file_name2, 'w') as outfile:
+            to_save = self.textEdit_2.toPlainText()
+            encryption_key_save = self.lineEdit.text()
+            data = {}
+            data['encrypted_message'] = []
+            if save_encryption_method == 'vigenere':
+                data['encrypted_message'].append({
+                    'message': to_save,
+                    'encryption_method': save_encryption_method,
+                    'encryption_key': encryption_key_save
+                })
+            else:    
+                data['encrypted_message'].append({
+                    'message': to_save,
+                    'encryption_method': save_encryption_method
+                })
+            json.dump(data, outfile)
+            self.check_save_message1 = "False"
+            self.label_2.hide()
+            self.lineEdit_2.hide()
+            self.pushButton_4.hide()
+            self.pushButton_5.setStyleSheet("")
+            self.label_4.show()
+            QtTest.QTest.qWait(3000)
+            self.label_4.hide()
+    def save_message(self):
+        check_save_message2 = self.check_save_message1
+        check_save_message3 = self.check_save_message4
+        if check_save_message2 == "False":
+            if check_save_message3 == "True":
+                self.check_save_message4 = "False"
+                self.pushButton_6.setStyleSheet("")
+                self.toolButton.hide()
+                self.lineEdit_3.hide()
+                self.pushButton_7.hide()
+            self.check_save_message1 = "True"
+            self.label_2.show()
+            self.lineEdit_2.show()
+            
+            self.pushButton_4.show()
+            self.pushButton_5.setStyleSheet("background-color:#38A1CB")
+        if check_save_message2 == "True":
+            self.check_save_message1 = "False"
+            self.label_2.hide()
+            self.lineEdit_2.hide()
+            self.pushButton_4.hide()
+            self.pushButton_5.setStyleSheet("")
+    def load_message(self):
+        check_save_message3 = self.check_save_message4
+        check_save_message2 = self.check_save_message1
+        if check_save_message3 == "False":
+            if check_save_message2 == "True":
+                self.check_save_message1 = "False"
+                self.label_2.hide()
+                self.lineEdit_2.hide()
+                self.pushButton_4.hide()
+                self.pushButton_5.setStyleSheet("")
+            self.check_save_message4 = "True"
+            self.pushButton_6.setStyleSheet("background-color:#38A1CB")
+            self.toolButton.show()
+            self.lineEdit_3.show()
+            self.pushButton_7.show()
+        if check_save_message3 == "True":
+            self.check_save_message4 = "False"
+            self.pushButton_6.setStyleSheet("")
+            self.toolButton.hide()
+            self.lineEdit_3.hide()
+            self.pushButton_7.hide()
+    def choose_a_file_to_load(self):
+        file_to_load1 = QFileDialog.getOpenFileName()[0]
+        file_to_load2 = str(file_to_load1)
+        self.lineEdit_3.setText(file_to_load2)
+    def load_the_file(self):
+        file_to_load = self.lineEdit_3.text()
+        with open(file_to_load) as json_file:
+            data = json.load(json_file)
+        for p in data['encrypted_message']:
+            print('Message: ' + p['message'])
+            print('Encryption Method: ' + p['encryption_method'])
+            print('')
+            global to_decrypt
+            to_decrypt = (p['message'])
+            if p['encryption_method'] == 'caesar':
+                caesar_decrypt()
+                from methods.caesar import decrypted_text
+            if p['encryption_method'] == 'morse':
+                morse_decrypt()
+                from methods.morse import decrypted_text
+            if p['encryption_method'] == 'vigenere':
+                global encryption_key
+                encryption_key = p['encryption_key']
+                vigenere_decrypt()
+                from methods.vigenere import decrypted_text
+            if p['encryption_method'] == 'substitution':
+                substitution_decrypt()
+                from methods.substitution import decrypted_text
+            self.textEdit_2.setText(decrypted_text)
+            self.check_save_message4 = "False"
+            self.pushButton_6.setStyleSheet("")
+            self.toolButton.hide()
+            self.lineEdit_3.hide()
+            self.pushButton_7.hide()
+            self.label_3.show()
+            QtTest.QTest.qWait(3000)
+            self.label_3.hide()
     def __init__(self):
         # Это здесь нужно для доступа к переменным, методам
         # и т.д. в файле design.py
@@ -150,19 +272,38 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.pushButton.clicked.connect(self.crypt)
         self.pushButton_2.clicked.connect(self.decrypt)
         self.pushButton_3.clicked.connect(self.copy_encryption_key)
+        self.pushButton_4.clicked.connect(self.save_message2)
+        self.pushButton_5.clicked.connect(self.save_message)
+        self.pushButton_6.clicked.connect(self.load_message)
         self.radioButton.toggled.connect(self.on_click_radioButton)
         self.radioButton_2.toggled.connect(self.on_click_radioButton)
         self.radioButton_3.toggled.connect(self.on_click_radioButton)
         self.radioButton_4.toggled.connect(self.on_click_radioButton)
+        self.toolButton.clicked.connect(self.choose_a_file_to_load)
+        self.pushButton_7.clicked.connect(self.load_the_file)
+        self.actionAbout_JET.triggered.connect(self.open_about_jet)
         #hide and show stuff
         self.lineEdit.hide()
+        self.lineEdit_2.hide()
         self.pushButton_3.hide()
+        self.pushButton_7.hide()
+        self.lineEdit_3.hide()
         self.label.hide()
+        self.label_2.hide()
+        self.label_3.hide()
+        self.label_3.setStyleSheet("color:#0B610B;")
+        self.label_4.hide()
+        self.label_4.setStyleSheet("color:#0B610B;")
+        self.toolButton.hide()
         self.pushButton_3.setStyleSheet("background-color:#5858FA;")
+        self.pushButton_4.setStyleSheet("background-color:#5858FA;")
+        self.pushButton_4.hide()
         self.lineEdit.setStyleSheet("background-color:#EFF2FB;")
+        self.lineEdit_2.setStyleSheet("background-color:#EFF2FB;")
         self.textEdit.setStyleSheet("background-color:#EFF2FB;")
         self.textEdit_2.setStyleSheet("background-color:#EFF2FB;")
-        
+        self.check_save_message1 = ("False")
+        self.check_save_message4 = ("False")
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
     window = ExampleApp()  # Создаём объект класса ExampleApp
