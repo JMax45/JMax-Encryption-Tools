@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
+    <width>690</width>
     <height>404</height>
    </rect>
   </property>
@@ -176,7 +176,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>550</width>
+     <width>690</width>
      <height>25</height>
     </rect>
    </property>
@@ -186,11 +186,29 @@
     </property>
     <addaction name="actionAbout_JET"/>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionPGEN"/>
+    <addaction name="actionEncryptTXT"/>
+   </widget>
    <addaction name="menuAbout"/>
+   <addaction name="menuTools"/>
   </widget>
   <action name="actionAbout_JET">
    <property name="text">
     <string>About JET</string>
+   </property>
+  </action>
+  <action name="actionEncryptTXT">
+   <property name="text">
+    <string>EncryptTXT</string>
+   </property>
+  </action>
+  <action name="actionPGEN">
+   <property name="text">
+    <string>PGEN</string>
    </property>
   </action>
  </widget>
