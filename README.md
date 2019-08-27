@@ -17,6 +17,10 @@ brew install pyqt5
 ```bash
 Download here: https://www.riverbankcomputing.com/software/pyqt/download5
 ```
+The program uses the pyAesCrypt module.
+```bash
+pip install pyAesCrypt
+```
 
 ## Cryptographic Methods
 
