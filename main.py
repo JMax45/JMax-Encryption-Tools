@@ -4,6 +4,8 @@ from PyQt5 import QtWidgets, QtTest
 from PyQt5.Qt import QApplication, QClipboard, QFileDialog
 from design import design
 from design.popup.about_jet import Ui_popup_about_jet
+from design.popup.encryptTXT import Ui_encryptTXT
+from design.popup.pgen import Ui_pgen
 from methods.morse import *
 from methods.caesar import *
 from methods.vigenere import *
@@ -264,6 +266,28 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             self.label_3.show()
             QtTest.QTest.qWait(3000)
             self.label_3.hide()
+    def open_encrypt_txt(self):
+        window1.hide()
+        height = self.geometry().y()
+        height2 = (height-30)
+        self.window4 = QtWidgets.QMainWindow()
+        global window4_global
+        window4_global = self.window4
+        self.ui = Ui_encryptTXT()
+        self.ui.setupUi(self.window4)
+        self.window4.show()
+        self.window4.move(self.geometry().x(), self.geometry().y())
+    def open_pgen(self):
+        window1.hide()
+        height = self.geometry().y()
+        height2 = (height-30)
+        self.window5 = QtWidgets.QMainWindow()
+        global window5_global
+        window5_global = self.window5
+        self.ui = Ui_pgen()
+        self.ui.setupUi(self.window5)
+        self.window5.show()
+        self.window5.move(self.geometry().x(), self.geometry().y())
     def __init__(self):
         # Это здесь нужно для доступа к переменным, методам
         # и т.д. в файле design.py
@@ -282,6 +306,8 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.toolButton.clicked.connect(self.choose_a_file_to_load)
         self.pushButton_7.clicked.connect(self.load_the_file)
         self.actionAbout_JET.triggered.connect(self.open_about_jet)
+        self.actionEncryptTXT.triggered.connect(self.open_encrypt_txt)
+        self.actionPGEN.triggered.connect(self.open_pgen)
         #hide and show stuff
         self.lineEdit.hide()
         self.lineEdit_2.hide()
@@ -306,9 +332,13 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.check_save_message4 = ("False")
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
-    window = ExampleApp()  # Создаём объект класса ExampleApp
-    window.setStyleSheet("background-color:#CED8F6;")
-    window.show()  # Показываем окно
+    global window1
+    global window4
+    global window5
+    window4 = ("null")
+    window1 = ExampleApp()  # Создаём объект класса ExampleApp
+    window1.setStyleSheet("background-color:#CED8F6;")
+    window1.show()  # Показываем окно
     app.exec_()  # и запускаем приложение
 
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
